@@ -2,7 +2,7 @@ import pandas as pd
 import random
 print('JUEGOS CULIAOS QUE TENEMOS:')
 print(' ')
-juegos = pd.read_csv(r"C:/Users/fneir/OneDrive/Escritorio/Código útil/Intentos de trabajos/Cabros/Juegos.csv")
+juegos = pd.read_csv(r"Juegos.csv")
 juegos = list(juegos['Juegos'])
 print(juegos)
 print(' ')
