@@ -1,0 +1,70 @@
+BÁsico
+
+Siempre poner <html> </html> y escribir todo dentro de las etiquetas
+			
+<head> </head>				--> sirve para poner título a la página en las pestañas
+
+<body> </body> 			--> sirve para el cuerpo de la página
+
+
+Manejo de texto
+
+<h1> </h1>				--> sirve para definir la importancia o tamaño de los títulos y párrafos, pero puede modificarse con css, también puede marcar los subtítulos con números sucesivos (h1, h2, h3)
+	
+<br />					--> espaciado
+	
+<p> </p>					--> párrafos y textos
+	
+<b> </b>					--> negrita
+
+<strong> </strong>			--> negrita con énfasis semántico
+		
+<spand> </spand>			--> marca textos que puedan modificarse en particular con css
+
+<i> </i>					--> itálica (cursiva)
+		
+<blockquotes> </blockquotes>	--> marca citas textuales
+
+<cite> </cite>				--> marca el autor de la cita
+
+
+Enlaces
+
+<a href=""> </a>											--> Dentro de href va el enlace https o bien un enlace relativo a algún archivo dentro de la carpeta y entre la etiqueta va el texto que será le hipervínculo
+
+<a target="blank" href="> </a>								--> Target significa que se abrirá una pestaña nueva en vez de abandonar la página actual
+
+<link rel="stylesheet" href= "estilos.css">						--> Importa archivos .css
+
+<script src="archivo.js"> </script>							--> Importa archivos .js
+
+<link rel="shortcut icon" type="image/x-icon" href= "favicon.ico"> --> Le pone un ícono a la pestaña de la página
+
+
+Listas y tablas
+
+<ul> </ul>												--> Es necesario para marcar donde empieza y donde terminala lista
+
+<li> </li>												--> Se usa para marcar los elementos de la lista
+
+<table> </table>											-->crea y abre la tabla de la misma forma que <ul>
+
+<tr> </tr>												--> cada uno de estos corresponde a una fila
+
+<td> </td>												--> cada uno de estos corresponde a un objeto de una fila
+
+
+Imagenes
+
+<img src "imagenes/logo.jpg" width="300" height="300"/>			--> abre la imagen y la anexa al html, width es el ancho y height la altura, si agrego alt="" muestra un mensaje que reemplaza la imagen en caso de que falle y si agrego title="" entonces agrega un titulo que se ve cuando se pone el mouse arriba
+
+
+formularios
+
+<form action="" method=""> </form>							--> crea formularios, action y method son opcionales
+
+<input type="text" value="">									--> en type va el tipo de elemento("text","password", "button", "checkbox", "radio" y en value lo que va dentro, además existe uno que se llama size que es el tamaño	
+	
+<select name="" id=""> </select>								--> crea una lista desplegable
+
+<option value="algo"> </option>								--> son los values de la lista anterior, entre las etiquetas va el nombre que se ve
