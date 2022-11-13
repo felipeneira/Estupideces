@@ -3,12 +3,13 @@
 #===========================================================================================================================================================================
 require "rest-client"
 require "json"
+require "pry"
 #===========================================================================================================================================================================
 # Clases
 #===========================================================================================================================================================================
 #definimos la cantidad de participantes, como estos deben ser random pero de la primera generación
 #utilizamos el número de la pokedéx nacional hasta el 151 junto a la función rand
-equipo = 2.times.map {rand(1..151)}
+equipo = 8.times.map {rand(1...151)}
 #definimos un número k que nos servirá para contabilizar y ordenar los pokémon
 k=0
 #definimos una variable Pokemon que nos servirá para organizar las estadísticas y ataques de cada pokémon
@@ -45,32 +46,6 @@ class Relacion
         @fairy=fairy
     end
 end
-class Juego
-    attr_accessor :fin, :numero_batalla
-    def initialize(fin, numero_batalla)
-        @fin = false
-        @numero_batalla = 0
-    end
-    attr_accessor
-    def nueva_ronda()
-        @Juego.numero_batalla + 1
-    end
-    attr_accessor :pokemon1, :pokemon2
-    def crear_jugadores(pokemon1,pokemon2)
-        @pokemon1 = pokemon1
-        @pokemon2 = pokemon2
-    end
-    def derrota()
-        if pokemon1.stats["hp"]<1 and pokemon2.stats["hp"] >0
-            @fin = true
-            puts "el ganador es " + @Juego.pokemon1["name"].to_s
-        end
-        if pokemon2.stats["hp"]<1 and pokemon1.stats["hp"] >0
-            @fin = true
-            puts "el ganador es " + @Juego.pokemon2["name"].to_s
-        end
-    end
-end
 #=========
 #===========================================================================================================================================================================
 # Informacion necesaria pokemon
@@ -105,43 +80,51 @@ for i in equipo
     stats.push(stats_pokemon)
     #movimientos    
     num_mov = iniciales1['moves'].length
-    movimientos = 4.times.map {rand(1...num_mov)}
+    movimientos = 10.times.map {rand(1...num_mov)}
 
     #de estos movimientos extraemos las url y las utilizamos para buscar el nombre en español y todos los stats necesarios        for movimiento in movimientos
     for movimiento in movimientos
-        url_move = iniciales1["moves"][movimiento]["move"]["url"]
-        mov_id = RestClient.get(url_move)
+        if iniciales1["moves"][movimiento]["move"]["url"] != nil
+            url_move = iniciales1["moves"][movimiento]["move"]["url"]
+        end
+            mov_id = RestClient.get(url_move)
         mov_name = JSON.parse(mov_id.to_str)
-        if mov_name["power"] != nil
-            mov_usados = {}
-            #nombre en español
-            mov_usado = mov_name['names'][5]["name"]                
-            mov_usados["nombre"] = mov_usado
-            #precisión
-            mov_prob = mov_name["accuracy"]
-            mov_usados["precision"] = mov_prob
-            #clase de daño
-            mov_class = mov_name["damage_class"]["name"]
-            mov_usados["clase"] = mov_class
-            #tipo
-            mov_tipo = mov_name["type"]["name"]                
-            mov_usados["tipo"] = mov_tipo
-            #daño
-            mov_dano = mov_name["power"]
-            mov_usados["dano"] = mov_dano
-            mov_usados1.push(mov_usados)
-            
-        end            
+        h=0
+        if h < 4
+            if mov_name["power"] != nil
+                mov_usados = {}
+                #nombre en español
+                mov_usado = mov_name['names'][5]["name"]                
+                mov_usados["nombre"] = mov_usado
+                #precisión
+                mov_prob = mov_name["accuracy"]
+                mov_usados["precision"] = mov_prob
+                #clase de daño
+                mov_class = mov_name["damage_class"]["name"]
+                mov_usados["clase"] = mov_class
+                #tipo
+                mov_tipo = mov_name["type"]["name"]                
+                mov_usados["tipo"] = mov_tipo
+                #daño
+                mov_dano = mov_name["power"]
+                mov_usados["dano"] = mov_dano
+                mov_usados1.push(mov_usados)
+                h = h + 1 
+            end  
+        end          
     end
     k = k + 1
+    ## adjuntamos todo a la clase Pokemon que será utilizada durante todo el script
     instance_variable_set("@Pokemon_#{k}",Pokemon.new(k,nombres,tipos1,stats,mov_usados1))      
 end
 #===========================================================================================================================================================================
 # Información necesaria juego
 #===========================================================================================================================================================================
+# Acá extraemos los datos de los tipos elementales del juego, de esta forma podemos buscar por ataque las debilidades y fortalezas
 tipos_posibles = ["normal","fire","water","grass","electric","ice","fighting","poison","ground","flying","psychic","bug","rock","ghost","dark","dragon","steel","fairy"]
 rel_parcial = []
 $rel_danos = []
+# acá extraemos la información de pokeAPI
 for tipo in tipos_posibles
     rel={}
     tipos = RestClient.get("https://pokeapi.co/api/v2/type/"+tipo.to_s)
@@ -152,7 +135,7 @@ for tipo in tipos_posibles
     rel["nada"]= tipos1['damage_relations']["no_damage_to"]
     rel_parcial.push(rel)
 end
-
+#acá establecemos una tabla final que nos servirá para buscar los daños mediante una funcion
 for item in rel_parcial
     rel = {}
     rel["nombre"] = rel_parcial[rel_parcial.find_index(item)]["nombre"]
@@ -174,7 +157,7 @@ end
 #===========================================================================================================================================================================
 # Funciones juego
 #===========================================================================================================================================================================
-
+#esta funcion busca los modificadores de daño para cada ataque utilizado y lo guarda en arrays
 def buscar_mod(tipo)
     for item in $rel_danos
         if item["nombre"].match(tipo)
@@ -193,6 +176,7 @@ def mod_dano(dmg,mult,elemento, tipo)
         dmg = dmg
     end
     j = buscar_mod(tipo)
+    #estos son los modificadores de daño
     nada = []
     mult.each do |item|
         nada.push(j["nada"].include? item)
@@ -220,66 +204,223 @@ def mod_dano(dmg,mult,elemento, tipo)
         dmg = dmg.to_f*0.to_f
         dmg
     end
+    #finalmente devuelve el daño redondéandolo hacia arriba
     dmg.ceil(0)
 end
+
 #esta def toma los 2 pokemones que están peleando, siendo x quien ataca e y el atacado
 def ataque(x,y)
     result = []
     mult = y.tipo
-    move = x.movimientos[rand(0...x.movimientos&.length)]
+    move = x.movimientos[rand(0...x.movimientos.length.to_int)]
     if move != nil
         if move["clase"] == "physical"
+            # en caso de ser un ataque físico calculamos el daño utilizando la función de la primera generación y considerando
+            # que todos los pokemon están con un multiplicador de nivel 10
             if move["dano"] != nil
-                dmg =  ((8*move["dano"].to_f)*(x.stats[0]["ataque"].to_f/y.stats[0]["defensa"].to_f))/50.to_f
+                dmg =  ((10*move["dano"].to_f)*(x.stats[0]["ataque"].to_f/y.stats[0]["defensa"].to_f))/50.to_f
                 puts x.nombre.to_s+ " usa " + move["nombre"].to_s + " contra " + y.nombre.to_s
                 elemento = x.tipo.include? move["tipo"]
                 tipo = move["tipo"]
                 result.push(elemento, dmg, tipo)
+                sleep 1
             end        
         elsif move["clase"] == "special"
+            # lo mismo aplica para el ataque y la defensa especial
             if move["dano"] != nil
-                dmg =  ((8*move["dano"].to_f)*(x.stats[0]["ataque_esp"].to_f/y.stats[0]["defensa_esp"].to_f))/50.to_f
+                dmg =  ((10*move["dano"].to_f)*(x.stats[0]["ataque_esp"].to_f/y.stats[0]["defensa_esp"].to_f))/50.to_f
                 puts x.nombre.to_s+ " usa " + move["nombre"].to_s + " contra " + y.nombre.to_s
                 elemento = x.tipo.include? move["tipo"]
                 tipo = move["tipo"]
                 result.push(elemento, dmg, tipo)
+                sleep 1
             end
         end
-    elsif move == nil
+    elsif move == nil #en algunos casos el programa confunde ataques, cuando esto pasa lo ponemos como un fallo
         puts x.nombre.to_s + " falló horriblemente"
     end
-    puts mod_dano(dmg,mult,elemento,tipo)
+    # aplicamos los modificadores de daño que tenemos de la función anterior
+    mod_dano(dmg,mult,elemento,tipo)
 end
-#puts @Pokemon_1.inspect
+# esta def considera el atributo velocidad y dice que pokemon parte primero
+def primero (x,y)
+    if x.stats[0]["velocidad"] > y.stats[0]["velocidad"]
+        return x
+    elsif x.stats[0]["velocidad"] < y.stats[0]["velocidad"]
+        return y
+    end
+end
+# Acá hay un error que no supe solucionar, pero creo que es el más problemático
 
-# x=@Pokemon_1
-# y=@Pokemon_2
-# k=0
-# batalla = [x,y]
-# competidores = []
-# batalla.each do |pokemon|
-#     competidor = {}
-#     k = k + 1
-#     competidor["competidor_#{k}"] = pokemon.nombre
-#     competidor["hp"] = pokemon.stats[0]["hp"]
-#     competidores.push(competidor)
-# end
-# puts competidores[1]
-# def duelo(x,y)
-#     competidores = {}
+# esta funcion contempla cada turno en el combate, separa a los pokemon por local y visita
+# para almacenar los datos de forma distinta a la clase
+
+# Use dos def para minimizar los problemas que se generan en este loop
+def local_parte (x,y)
+    local = x
+    visita = y
+    monitor = 1 
+    until monitor < 0
+        if local.stats[0]["hp"] > 0
+            if visita.stats[0]["hp"] > 0
+                visita.stats[0]["hp"] = visita.stats[0]["hp"].to_int-ataque(local,visita)
+                puts "y baja su hp a " + visita.stats[0]["hp"].to_s
+                puts " "
+                monitor = visita.stats[0]["hp"]
+                if visita.stats[0]["hp"] > 0
+                    if local.stats[0]["hp"] > 0
+                        local.stats[0]["hp"] = local.stats[0]["hp"].to_int-ataque(visita,local)
+                        puts "y baja su hp a " + local.stats[0]["hp"].to_s
+                        puts " "
+                        monitor = local.stats[0]["hp"]
+                        if local.stats[0]["hp"] < 0
+                            monitor = local.stats[0]["hp"]
+                            ganador = visita
+                        end
+                    else
+                        monitor = local.stats[0]["hp"]
+                        ganador = visita
+                    end
+                else
+                    monitor = visita.stats[0]["hp"]
+                    ganador = local
+                end
+            else
+                monitor = visita.stats[0]["hp"]
+                ganador = local
+            end
+        elsif local.stats[0]["hp"] < 0
+            monitor = local.stats[0]["hp"]
+            ganador = visita
+        end
+        if monitor < 0
+            break
+        end
+    end
+    resultado = [monitor, ganador]
+end
+
+def visita_parte(x,y)
+    local = x
+    visita = y
+    monitor = 1 
+    until monitor < 0
+        if visita.stats[0]["hp"] > 0
+            if local.stats[0]["hp"] > 0
+                local.stats[0]["hp"] = local.stats[0]["hp"].to_int-ataque(visita,local)
+                puts "y baja su hp a " + local.stats[0]["hp"].to_s
+                puts " "
+                monitor = local.stats[0]["hp"]
+
+                if local.stats[0]["hp"] > 0
+                    if visita.stats[0]["hp"] > 0
+                        visita.stats[0]["hp"] = visita.stats[0]["hp"].to_int-ataque(local,visita)
+                        puts "y baja su hp a " + visita.stats[0]["hp"].to_s
+                        puts " "
+                        monitor = visita.stats[0]["hp"]
+                        if visita.stats[0]["hp"] < 0
+                            monitor = visita.stats[0]["hp"]
+                            ganador = local
+                        end
+                    else
+                        monitor = visita.stats[0]["hp"]
+                        ganador = local
+                    end
+                else
+                    monitor = local.stats[0]["hp"]
+                    ganador = visita
+                end
+            else
+                monitor = local.stats[0]["hp"]
+                ganador = visita
+            end
+        elsif visita.stats[0]["hp"] < 0
+            monitor = visita.stats[0]["hp"]
+            ganador = local
+        end
+        
+        if monitor < 0
+            break
+        end    
+    end
+    resultado = [monitor, ganador]
+end
+
+def turno(x,y)
+    local = x
+    visita = y
+    # usamos la def para ver quien parte
+    quien = primero(local,visita).nombre
+    if primero(local,visita).nombre == local.nombre
+        z =local_parte(local, visita)
+    elsif primero(local,visita).nombre == visita.nombre
+        z = visita_parte(local, visita)
+    end
+end
+
+def combate(x,y)
+    puts " "
+    puts " "
+    puts " "
+    puts "siguiente combate"
+    puts " "
+    puts " "
+    puts x.nombre+ " vs " +y.nombre
+    puts " "
+    puts "que el duelo comience"
+    puts " "
+    ganador = turno(x,y)[1]
+    puts "el ganador es " + ganador.nombre.to_s
+    ganador
+end    
+puts @Pokemon_1.nombre
+puts @Pokemon_2.nombre
+puts @Pokemon_3.nombre
+puts @Pokemon_4.nombre
+puts @Pokemon_5.nombre
+puts @Pokemon_6.nombre
+puts @Pokemon_7.nombre
+puts @Pokemon_8.nombre
+def campeonato(a,b,c,d,e,f,g,h)
+    ronda1 = []
+    ronda2 = []
+    ronda3 = []
+    n = [a,b,c,d,e,f,g,h]
+    n << "Dummy" if n.size.odd?
+    fixed_name = n.shuffle!.pop
     
-#     tiktak = 0
+    1.times do |i|
+        two_rows = [[fixed_name]+n[0..n.size/2-1], n[n.size/2..-1].reverse]
+        pairs = two_rows.transpose.shuffle 
+        ronda1.push(pairs)
+    end
+    puts "RONDA 1"
+    puts " "
+    puts " "
+    n = []
+    n.push(combate(ronda1[0][0][0],ronda1[0][0][1]))   
+    n.push(combate(ronda1[0][1][0],ronda1[0][1][1]))
+    n.push(combate(ronda1[0][2][0],ronda1[0][2][1]))   
+    n.push(combate(ronda1[0][3][0],ronda1[0][3][1]))
+ 
     
-#     until hp.include? 0 == true
-#         hp[0] = hp[0]-10
-#         tiktak = tiktak + 1
-#         if tiktak % 2 == 0
-#             puts par = x,y
-#         else
-#             puts impar = y,x
-#         end
-#         sleep 2
-#         puts " "
-#     end
-# end
-#puts turno(@Pokemon_1,@Pokemon_2)
+    puts "RONDA 2"
+    puts " "
+    puts " "
+
+    final = []
+    final.push(combate(n[0],n[2]))   
+    final.push(combate(n[3],n[1]))
+
+    
+
+    puts "RONDA 3"
+    puts " "
+    puts " "
+    campeon = (combate(final[0],final[1]))
+    puts " "
+    puts " "
+    puts " "
+    puts "El campeon de nuestro torneo es " + campeon.nombre
+end
+campeonato(@Pokemon_1, @Pokemon_2, @Pokemon_3, @Pokemon_4, @Pokemon_5, @Pokemon_6, @Pokemon_7, @Pokemon_8)
