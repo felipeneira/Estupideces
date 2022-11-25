@@ -1,9 +1,12 @@
+puts "Cargando torneo"
+puts " "
+puts " "
+puts " "
 #===========================================================================================================================================================================
 # Librerias usadas
 #===========================================================================================================================================================================
 require "rest-client"
 require "json"
-require "pry"
 #===========================================================================================================================================================================
 # Clases
 #===========================================================================================================================================================================
@@ -153,7 +156,6 @@ for item in rel_parcial
     end
     $rel_danos.push(rel)
 end
-
 #===========================================================================================================================================================================
 # Funciones juego
 #===========================================================================================================================================================================
@@ -248,6 +250,8 @@ def primero (x,y)
         return x
     elsif x.stats[0]["velocidad"] < y.stats[0]["velocidad"]
         return y
+    else
+        return x
     end
 end
 # Acá hay un error que no supe solucionar, pero creo que es el más problemático
@@ -260,17 +264,19 @@ def local_parte (x,y)
     local = x
     visita = y
     monitor = 1 
-    until monitor < 0
-        if local.stats[0]["hp"] > 0
-            if visita.stats[0]["hp"] > 0
+    until monitor <= 0
+        if local.stats[0]["hp"] >= 0
+            if visita.stats[0]["hp"] >= 0
                 visita.stats[0]["hp"] = visita.stats[0]["hp"].to_int-ataque(local,visita)
                 puts "y baja su hp a " + visita.stats[0]["hp"].to_s
+                sleep 1
                 puts " "
                 monitor = visita.stats[0]["hp"]
-                if visita.stats[0]["hp"] > 0
-                    if local.stats[0]["hp"] > 0
+                if visita.stats[0]["hp"] >= 0
+                    if local.stats[0]["hp"] >= 0
                         local.stats[0]["hp"] = local.stats[0]["hp"].to_int-ataque(visita,local)
                         puts "y baja su hp a " + local.stats[0]["hp"].to_s
+                        sleep 1
                         puts " "
                         monitor = local.stats[0]["hp"]
                         if local.stats[0]["hp"] < 0
@@ -304,18 +310,20 @@ def visita_parte(x,y)
     local = x
     visita = y
     monitor = 1 
-    until monitor < 0
-        if visita.stats[0]["hp"] > 0
-            if local.stats[0]["hp"] > 0
+    until monitor <= 0
+        if visita.stats[0]["hp"] >= 0
+            if local.stats[0]["hp"] >= 0
                 local.stats[0]["hp"] = local.stats[0]["hp"].to_int-ataque(visita,local)
                 puts "y baja su hp a " + local.stats[0]["hp"].to_s
+                sleep 1
                 puts " "
                 monitor = local.stats[0]["hp"]
 
-                if local.stats[0]["hp"] > 0
-                    if visita.stats[0]["hp"] > 0
+                if local.stats[0]["hp"] >= 0
+                    if visita.stats[0]["hp"] >= 0
                         visita.stats[0]["hp"] = visita.stats[0]["hp"].to_int-ataque(local,visita)
                         puts "y baja su hp a " + visita.stats[0]["hp"].to_s
+                        sleep 1
                         puts " "
                         monitor = visita.stats[0]["hp"]
                         if visita.stats[0]["hp"] < 0
@@ -362,25 +370,30 @@ def combate(x,y)
     puts " "
     puts " "
     puts " "
-    puts "siguiente combate"
+    puts "Siguiente combate"
     puts " "
     puts " "
+    sleep 2
     puts x.nombre+ " vs " +y.nombre
+    sleep 2
     puts " "
-    puts "que el duelo comience"
+    puts "Que el duelo comience!"
     puts " "
+    sleep 1
     ganador = turno(x,y)[1]
-    puts "el ganador es " + ganador.nombre.to_s
+    puts "El ganador es " + ganador.nombre.to_s
     ganador
-end    
-puts @Pokemon_1.nombre
-puts @Pokemon_2.nombre
-puts @Pokemon_3.nombre
-puts @Pokemon_4.nombre
-puts @Pokemon_5.nombre
-puts @Pokemon_6.nombre
-puts @Pokemon_7.nombre
-puts @Pokemon_8.nombre
+end  
+puts "Pokémon que participarán del torneo"
+puts "Pokemon 1: " + @Pokemon_1.nombre
+puts "Pokemon 2: " + @Pokemon_2.nombre
+puts "Pokemon 3: " + @Pokemon_3.nombre
+puts "Pokemon 4: " + @Pokemon_4.nombre
+puts "Pokemon 5: " + @Pokemon_5.nombre
+puts "Pokemon 6: " + @Pokemon_6.nombre
+puts "Pokemon 7: " + @Pokemon_7.nombre
+puts "Pokemon 8: " + @Pokemon_8.nombre
+sleep 10
 def campeonato(a,b,c,d,e,f,g,h)
     ronda1 = []
     ronda2 = []
@@ -394,26 +407,31 @@ def campeonato(a,b,c,d,e,f,g,h)
         pairs = two_rows.transpose.shuffle 
         ronda1.push(pairs)
     end
+    puts " "
     puts "RONDA 1"
     puts " "
     puts " "
     n = []
-    n.push(combate(ronda1[0][0][0],ronda1[0][0][1]))   
+    n.push(combate(ronda1[0][0][0],ronda1[0][0][1]))
+    sleep 2
     n.push(combate(ronda1[0][1][0],ronda1[0][1][1]))
-    n.push(combate(ronda1[0][2][0],ronda1[0][2][1]))   
+    sleep 2
+    n.push(combate(ronda1[0][2][0],ronda1[0][2][1]))
+    sleep 2
     n.push(combate(ronda1[0][3][0],ronda1[0][3][1]))
- 
-    
+    sleep 2
+    puts " "
     puts "RONDA 2"
     puts " "
     puts " "
 
     final = []
-    final.push(combate(n[0],n[2]))   
+    final.push(combate(n[0],n[2]))
+    sleep 2
     final.push(combate(n[3],n[1]))
-
+    sleep 2
     
-
+    puts " "
     puts "RONDA 3"
     puts " "
     puts " "
@@ -421,6 +439,7 @@ def campeonato(a,b,c,d,e,f,g,h)
     puts " "
     puts " "
     puts " "
+    sleep 2
     puts "El campeon de nuestro torneo es " + campeon.nombre
 end
 campeonato(@Pokemon_1, @Pokemon_2, @Pokemon_3, @Pokemon_4, @Pokemon_5, @Pokemon_6, @Pokemon_7, @Pokemon_8)
