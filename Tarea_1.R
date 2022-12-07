@@ -5,7 +5,6 @@ library("fpp3")
 library("stargazer")
 library("tidyquant")
 
-
 library('broom')
 
 # X e Y corresponden a la variable dependiente e independiente
@@ -23,7 +22,7 @@ sigma2 = (t(e)%*%e)/(t-5-1)
 MV <- (-t/2*log(2*3.14*sigma2)-(1/2*sigma2)*sum(e^2))*(-1)
 Ygorro <- Y-e
 RA <- solve(t(X)%*%X)%*%(t(X)%*%e)
-R2 <- (1)-((t(e)%*%e)/((t(Y-Ygorro))%*%(Y-Ygorro)))
+# R2 <- (1)-((t(e)%*%e)/((t(Y-Ygorro))%*%(Y-Ygorro)))
 prueba <- lm(data = datos, e2 ~ r_us+ r_ch + cobre + petroleo + broad_dollar)
 info_reg_aux <- glance(prueba)
 R2 <- info_reg_aux$r.squared
