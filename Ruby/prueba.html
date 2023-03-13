@@ -1,0 +1,144 @@
+<html>
+  <head>
+    <title>Facebook Welcome Page</title>
+    <style>
+        body {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #e9ebee;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+}
+
+.logo {
+  font-size: 36px;
+  font-weight: bold;
+  color: #1877f2;
+}
+
+.login-form {
+  display: flex;
+}
+
+.login-form input {
+  padding: 5px 10px;
+  margin-right: 10px;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+}
+
+.login-form button {
+  padding: 5px 10px;
+  background-color: #1877f2;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.main-content {
+  display: flex;
+  justify-content: space-between;
+  padding: 50px 0;
+}
+
+.left-content {
+  flex-basis: 55%;
+}
+
+.right-content {
+  flex-basis: 40%;
+}
+
+.slogan {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.description {
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.signup-form {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 3px;
+}
+
+.signup-form label {
+  display: block;
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.signup-form input {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+}
+
+.signup-form button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background-color: #1877f2;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <div class="logo">Facebook</div>
+        <div class="login-form">
+          <input type="text" placeholder="Email or Phone Number">
+          <input type="password" placeholder="Password">
+          <button type="submit">Log In</button>
+        </div>
+      </div>
+      <div class="main-content">
+        <div class="left-content">
+          <h1 class="slogan">Connect with friends and the world around you on Facebook.</h1>
+          <p class="description">See photos and updates from friends in News Feed.</p>
+          <p class="description">Share what's new in your life on your Timeline.</p>
+          <p class="description">Find more of what you're looking for with Facebook Search.</p>
+        </div>
+        <div class="right-content">
+          <h2>Create a New Account</h2>
+          <p>It's quick and easy.</p>
+          <form class="signup-form">
+            <input type="text" placeholder="First Name">
+            <input type="text" placeholder="Last Name">
+            <input type="text" placeholder="Email or Phone Number">
+            <input type="password" placeholder="New Password">
+            <label>Birthday</label>
+            <input type="date">
+            <label>Gender</label>
+            <input type="radio" name="gender" value="female"> Female
+            <input type="radio" name="gender" value="male"> Male
+            <input type="radio" name="gender" value="other"> Other
+            <button type="submit">Sign Up</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
