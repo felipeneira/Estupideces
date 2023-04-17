@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AnalysisUIOptions">
+    <option name="GROUP_BY_SEVERITY" value="true" />
+    <option name="FILTER_RESOLVED_ITEMS" value="false" />
+  </component>
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="38262ac1-2b1b-4064-99eb-b7eeec5a8e22" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/galloclaudio/CommandManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/galloclaudio/ICommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/galloclaudio/Main.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/galloclaudio/SlashCommandListener.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/galloclaudio/commands/music/NowPlaying.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/galloclaudio/commands/music/Play.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/galloclaudio/commands/music/Queue.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/galloclaudio/commands/music/Repeat.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/galloclaudio/commands/music/Skip.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/galloclaudio/commands/music/Stop.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/galloclaudio/lavaplayer/AudioForwarder.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/galloclaudio/lavaplayer/GuildMusicManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/galloclaudio/lavaplayer/PlayerManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/galloclaudio/lavaplayer/TrackScheduler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/galloclaudio/CommandManager.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/galloclaudio/ICommand.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/galloclaudio/Main.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/galloclaudio/SlashCommandListener.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/galloclaudio/commands/music/NowPlaying.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/galloclaudio/commands/music/Play.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/galloclaudio/commands/music/Queue.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/galloclaudio/commands/music/Repeat.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/galloclaudio/commands/music/Skip.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/galloclaudio/commands/music/Stop.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/galloclaudio/lavaplayer/AudioForwarder.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/galloclaudio/lavaplayer/GuildMusicManager.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/galloclaudio/lavaplayer/PlayerManager$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/galloclaudio/lavaplayer/PlayerManager.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/galloclaudio/lavaplayer/TrackScheduler.class" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CodeInsightWorkspaceSettings">
+    <option name="optimizeImportsOnTheFly" value="true" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="package-info" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="workspaceImportEnabled" value="true" />
+      </MavenImportingSettings>
+    </option>
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectId" id="2NCWwSi8XLR7SZaxwYlnWu3RS3z" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "last_opened_file_path": "/home/felipe/Descargas/Tutorial-Bot-master",
+    "project.structure.last.edited": "Global Libraries",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.2"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="ExtractSuperBase.RECENT_KEYS">
+      <recent name="com.galloclaudio" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.galloclaudio" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.galloclaudio.Main" />
+      <module name="GalloClaudio" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.galloclaudio.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Main" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="38262ac1-2b1b-4064-99eb-b7eeec5a8e22" name="Changes" comment="" />
+      <created>1679168784085</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1679168784085</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
